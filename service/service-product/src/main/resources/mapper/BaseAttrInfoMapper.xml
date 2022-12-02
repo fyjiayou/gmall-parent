@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fystart.gmall.product.mapper.BaseAttrInfoMapper">
+
+    <resultMap id="baseAttrInfoMap" type="com.fystart.gmall.model.product.BaseAttrInfo" autoMapping="true">
+        <id property="id" column="id"></id>
+
+        <collection property="attrValueList" ofType="com.fystart.gmall.model.product.BaseAttrValue" autoMapping="true">
+            <id column="attr_value_id" property="id"></id>
+        </collection>
+    </resultMap>
+
+    <!-- List<BaseAttrInfo> getAttrInfoList(Long category1Id, Long category2Id, Long category3Id); -->
+    <select id="getAttrInfoList" resultMap="baseAttrInfoMap">
+        select
+            bai.id,bai.attr_name,bai.category_id,bai.category_level,
+            bav.id attr_value_id,bav.value_name,bav.attr_id
+        from base_attr_info bai inner join base_attr_value bav
+        on bai.id = bav.attr_id
+        <where>
+            <if test="category1Id != null and category1Id != 0">
+                or (bai.category_level = 1 and bai.category_id = #{category1Id})
+            </if>
+            <if test="category2Id != null and category2Id != 0">
+                or (bai.category_level = 2 and bai.category_id = #{category2Id})
+            </if>
+           <if test="category2Id != null and category3Id != 0">
+                or (bai.category_level = 3 and bai.category_id = #{category3Id})
+            </if>
+        </where>
+        order by bai.category_level,bai.id
+    </select>
+
+</mapper>
