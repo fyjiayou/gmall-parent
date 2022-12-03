@@ -1,7 +1,9 @@
 package com.fystart.gmall.product.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.fystart.gmall.model.product.*;
 import com.fystart.gmall.product.mapper.*;
 import com.fystart.gmall.product.service.BaseMangerService;
@@ -35,6 +37,9 @@ public class BaseManagerServiceImpl implements BaseMangerService {
 
     @Autowired
     private BaseAttrValueMapper baseAttrValueMapper;
+
+    @Autowired
+    private SpuInfoMapper spuInfoMapper;
 
     @Override
     public List<BaseCategory1> getCategory1Info() {
@@ -111,7 +116,6 @@ public class BaseManagerServiceImpl implements BaseMangerService {
 
         return baseAttrInfo;
     }
-
     private List<BaseAttrValue> getAttrValueList(Long attrId) {
 
         LambdaQueryWrapper<BaseAttrValue> queryWrapper = new LambdaQueryWrapper<>();
@@ -119,6 +123,20 @@ public class BaseManagerServiceImpl implements BaseMangerService {
 
         return baseAttrValueMapper.selectList(queryWrapper);
     }
+
+    @Override
+    public IPage<SpuInfo> getSpuInfoPage(Page<SpuInfo> page, Long category3Id) {
+
+        LambdaQueryWrapper<SpuInfo> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(SpuInfo::getCategory3Id,category3Id);
+        queryWrapper.orderByDesc(SpuInfo::getId);
+
+        Page<SpuInfo> spuInfoPage = spuInfoMapper.selectPage(page, queryWrapper);
+
+        return spuInfoPage;
+    }
+
+
 
 
 }

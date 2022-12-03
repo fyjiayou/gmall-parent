@@ -1,0 +1,44 @@
+package com.fystart.gmall.product.controller;
+
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.fystart.gmall.common.result.Result;
+import com.fystart.gmall.model.product.SpuInfo;
+import com.fystart.gmall.product.service.BaseMangerService;
+import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+/**
+ * @author fy
+ * @date 2022/12/3 15:55
+ */
+@RestController
+@RequestMapping("/admin/product")
+public class SpuManagerController {
+
+    @Autowired
+    private BaseMangerService managerService;
+
+    /**
+     * spu分页列表查询
+     * http://api.gmall.com/admin/product/1/10?category3Id=61
+     * @RequestBody的作用 ：将前台传递过来的json{"category3Id":"61"}  字符串变为java 对象。
+     */
+    @GetMapping("/{current}/{limit}")
+    public Result getSpuInfoPage(@PathVariable Long current,
+                                 @PathVariable Long limit,
+                                 Long category3Id){
+
+        Page<SpuInfo> page = new Page<>(current,limit);
+
+        // 获取数据
+        IPage<SpuInfo> spuInfoPageList = managerService.getSpuInfoPage(page, category3Id);
+
+        // 将获取到的数据返回即可！
+        return Result.ok(spuInfoPageList);
+    }
+}
