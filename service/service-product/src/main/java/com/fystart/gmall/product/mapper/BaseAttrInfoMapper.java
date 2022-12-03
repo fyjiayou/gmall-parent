@@ -1,7 +1,9 @@
 package com.fystart.gmall.product.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.fystart.gmall.model.product.BaseAttrInfo;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -12,7 +14,7 @@ import java.util.List;
  */
 @Mapper
 @Repository
-public interface BaseAttrInfoMapper {
+public interface BaseAttrInfoMapper extends BaseMapper<BaseAttrInfo> {
     /**
      * 根据一二三级分类查询平台属性和value
      * @param category1Id
@@ -20,5 +22,7 @@ public interface BaseAttrInfoMapper {
      * @param category3Id
      * @return
      */
-    List<BaseAttrInfo> getAttrInfoList(Long category1Id, Long category2Id, Long category3Id);
+    List<BaseAttrInfo> getAttrInfoList(@Param("category1Id") Long category1Id,
+                                       @Param("category2Id") Long category2Id,
+                                       @Param("category3Id") Long category3Id);
 }

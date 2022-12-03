@@ -1,18 +1,12 @@
 package com.fystart.gmall.product.controller;
 
 import com.fystart.gmall.common.result.Result;
-import com.fystart.gmall.model.product.BaseAttrInfo;
-import com.fystart.gmall.model.product.BaseCategory1;
-import com.fystart.gmall.model.product.BaseCategory2;
-import com.fystart.gmall.model.product.BaseCategory3;
+import com.fystart.gmall.model.product.*;
 import com.fystart.gmall.product.service.BaseMangerService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -66,4 +60,22 @@ public class BaseManagerController {
         return Result.ok(baseAttrInfoList);
     }
 
+    @ApiOperation("平台属性新增和修改")
+    @PostMapping("/saveAttrInfo")
+    public Result saveAttrInfo(@RequestBody BaseAttrInfo baseAttrInfo) {
+
+        baseMangerService.saveAttrInfo(baseAttrInfo);
+
+        return Result.ok();
+    }
+
+    @ApiOperation("根据属性id查询属性值集合")
+    @GetMapping("/getAttrValueList/{attrId}")
+    public Result getAttrValueList(@PathVariable Long attrId){
+
+        BaseAttrInfo baseAttrInfo = baseMangerService.getAttrInfo(attrId);
+        List<BaseAttrValue> attrValueList = baseAttrInfo.getAttrValueList();
+
+        return Result.ok(attrValueList);
+    }
 }

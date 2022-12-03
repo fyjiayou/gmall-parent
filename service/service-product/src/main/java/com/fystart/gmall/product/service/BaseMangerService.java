@@ -20,4 +20,8 @@ public interface BaseMangerService {
     List<BaseCategory3> getCategory3Info(String category2Id);
 
     List<BaseAttrInfo> attrInfoList(Long category1Id,Long category2Id,Long category3Id);
+
+    void saveAttrInfo(BaseAttrInfo baseAttrInfo);
+
+    BaseAttrInfo getAttrInfo(Long attrId);
 }
