@@ -53,6 +53,15 @@ public class BaseManagerServiceImpl implements BaseMangerService {
     @Autowired
     private SpuPosterMapper spuPosterMapper;
 
+    @Autowired
+    private SkuInfoMapper skuInfoMapper;
+    @Autowired
+    private SkuImageMapper skuImageMapper;
+    @Autowired
+    private SkuAttrValueMapper skuAttrValueMapper;
+    @Autowired
+    private SkuSaleAttrValueMapper skuSaleAttrValueMapper;
+
     @Override
     public List<BaseCategory1> getCategory1Info() {
 
@@ -223,6 +232,73 @@ public class BaseManagerServiceImpl implements BaseMangerService {
                 }
             }
         }
+    }
+
+    @Override
+    public List<SpuSaleAttr> spuSaleAttrList(Long spuId) {
+        return spuSaleAttrMapper.spuSaleAttrList(spuId);
+    }
+
+    @Override
+    public List<SpuImage> spuImageList(Long spuId) {
+
+        LambdaQueryWrapper<SpuImage> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(SpuImage::getSpuId,spuId);
+
+        return spuImageMapper.selectList(queryWrapper);
+    }
+
+    public void saveSkuInfo(SkuInfo skuInfo){
+
+        skuInfo.setIsSale(0);
+
+        //保存skuInfo
+        skuInfoMapper.insert(skuInfo);
+
+        Long skuId = skuInfo.getId();
+
+        //保存图片
+        List<SkuImage> skuImageList = skuInfo.getSkuImageList();
+        if (!CollectionUtils.isEmpty(skuImageList)){
+            for (SkuImage skuImage : skuImageList) {
+                //设置skuId
+                skuImage.setSkuId(skuId);
+                skuImageMapper.insert(skuImage);
+            }
+        }
+
+        //保存平台属性
+        List<SkuAttrValue> skuAttrValueList = skuInfo.getSkuAttrValueList();
+        if (!CollectionUtils.isEmpty(skuAttrValueList)) {
+            for (SkuAttrValue skuAttrValue : skuAttrValueList) {
+                skuAttrValue.setSkuId(skuId);
+
+                skuAttrValueMapper.insert(skuAttrValue);
+            }
+        }
+
+        //保存销售属性
+        List<SkuSaleAttrValue> skuSaleAttrValueList = skuInfo.getSkuSaleAttrValueList();
+        if (!CollectionUtils.isEmpty(skuSaleAttrValueList)) {
+            for (SkuSaleAttrValue skuSaleAttrValue : skuSaleAttrValueList) {
+
+                //设置skuId
+                skuSaleAttrValue.setSkuId(skuId);
+                //设置spuId
+                skuSaleAttrValue.setSpuId(skuInfo.getSpuId());
+
+                skuSaleAttrValueMapper.insert(skuSaleAttrValue);
+            }
+        }
+    }
+
+    @Override
+    public IPage<SkuInfo> skuListPage(Page<SkuInfo> page) {
+
+        LambdaQueryWrapper<SkuInfo> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.orderByDesc(SkuInfo::getId);
+
+        return skuInfoMapper.selectPage(page,queryWrapper);
     }
 }
 

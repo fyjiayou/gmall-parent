@@ -29,4 +29,31 @@ public interface BaseMangerService {
     List<BaseSaleAttr> baseSaleAttrList();
 
     void saveSpuInfo(SpuInfo spuInfo);
+
+    /**
+     * 根据spuId 查询销售属性集合
+     * @param spuId
+     * @return
+     */
+    List<SpuSaleAttr> spuSaleAttrList(Long spuId);
+
+    /**
+     * 根据spuId查询图片列表
+     * @param spuId
+     * @return
+     */
+    List<SpuImage> spuImageList(Long spuId);
+
+    /**
+     * 保存sku信息
+     * @param skuInfo
+     */
+    void saveSkuInfo(SkuInfo skuInfo);
+
+    /**
+     * 分页查询sku信息
+     * @param page
+     * @return
+     */
+    IPage<SkuInfo> skuListPage(Page<SkuInfo> page);
 }
