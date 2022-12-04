@@ -25,4 +25,8 @@ public interface BaseMangerService {
     BaseAttrInfo getAttrInfo(Long attrId);
 
     IPage<SpuInfo> getSpuInfoPage(Page<SpuInfo> page, Long category3Id);
+
+    List<BaseSaleAttr> baseSaleAttrList();
+
+    void saveSpuInfo(SpuInfo spuInfo);
 }

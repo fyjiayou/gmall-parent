@@ -3,14 +3,14 @@ package com.fystart.gmall.product.controller;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.fystart.gmall.common.result.Result;
+import com.fystart.gmall.model.product.BaseSaleAttr;
 import com.fystart.gmall.model.product.SpuInfo;
 import com.fystart.gmall.product.service.BaseMangerService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * @author fy
@@ -40,5 +40,22 @@ public class SpuManagerController {
 
         // 将获取到的数据返回即可！
         return Result.ok(spuInfoPageList);
+    }
+
+    @ApiOperation("获取销售属性")
+    @GetMapping("/baseSaleAttrList")
+    public Result baseSaleAttrList(){
+        List<BaseSaleAttr> baseSaleAttrList = managerService.baseSaleAttrList();
+
+        return Result.ok(baseSaleAttrList);
+    }
+
+    @ApiOperation("spu保存")
+    @PostMapping("/saveSpuInfo")
+    public Result saveSpuInfo(@RequestBody SpuInfo spuInfo){
+
+        managerService.saveSpuInfo(spuInfo);
+
+        return Result.ok();
     }
 }

@@ -9,4 +9,11 @@
     <artifactId>service-product</artifactId>
     <name>service-product</name>
 
+    <dependencies>
+        <dependency>
+            <groupId>io.minio</groupId>
+            <artifactId>minio</artifactId>
+            <version>8.2.0</version>
+        </dependency>
+    </dependencies>
 </project>
