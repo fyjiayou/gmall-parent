@@ -26,42 +26,33 @@ public class SkuManagerController {
     @Autowired
     private BaseMangerService baseMangerService;
 
-    @ApiOperation("获取销售属性")
+    @ApiOperation(httpMethod = "GET", value = "根据spuId查询销售属性和销售属性值集合")
     @GetMapping("/spuSaleAttrList/{spuId}")
-    public Result spuSaleAttrList(@PathVariable Long spuId){
-
+    public Result spuSaleAttrList(@PathVariable Long spuId) {
         List<SpuSaleAttr> spuSaleAttrList = baseMangerService.spuSaleAttrList(spuId);
-
         return Result.ok(spuSaleAttrList);
     }
 
-    @ApiOperation("根据spuId查询图片列表")
+    @ApiOperation(httpMethod = "GET", value = "根据spuId查询图片列表")
     @GetMapping("/spuImageList/{spuId}")
-    public Result spuImageList(@PathVariable Long spuId){
-
+    public Result spuImageList(@PathVariable Long spuId) {
         List<SpuImage> spuImageList = baseMangerService.spuImageList(spuId);
-
         return Result.ok(spuImageList);
     }
 
-    @ApiOperation("保存sku")
+    @ApiOperation(httpMethod = "POST", value = "保存sku")
     @PostMapping("/saveSkuInfo")
-    public Result saveSkuInfo(@RequestBody SkuInfo skuInfo){
-
+    public Result saveSkuInfo(@RequestBody SkuInfo skuInfo) {
         baseMangerService.saveSkuInfo(skuInfo);
-
         return Result.ok();
     }
 
-    @ApiOperation("查询sku列表")
+    @ApiOperation(httpMethod = "GET", value = "查询sku列表")
     @GetMapping("/list/{current}/{limit}")
-    public Result list(@PathVariable Long current,@PathVariable Long limit){
-
+    public Result list(@PathVariable Long current, @PathVariable Long limit) {
         //封装分页对象
-        Page<SkuInfo> page = new Page<>(current,limit);
-
+        Page<SkuInfo> page = new Page<>(current, limit);
         IPage<SkuInfo> iPgae = baseMangerService.skuListPage(page);
-
         return Result.ok(iPgae);
     }
 }

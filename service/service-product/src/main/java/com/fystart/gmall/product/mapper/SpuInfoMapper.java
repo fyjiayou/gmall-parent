@@ -10,6 +10,5 @@ import org.springframework.stereotype.Repository;
  * @date 2022/12/3 16:00
  */
 @Mapper
-@Repository
 public interface SpuInfoMapper extends BaseMapper<SpuInfo> {
 }

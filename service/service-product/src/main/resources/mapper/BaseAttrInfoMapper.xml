@@ -29,6 +29,7 @@
            <if test="category2Id != null and category3Id != 0">
                 or (bai.category_level = 3 and bai.category_id = #{category3Id})
             </if>
+            and bai.is_deleted = 0
         </where>
         order by bai.category_level,bai.id
     </select>

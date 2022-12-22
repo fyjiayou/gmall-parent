@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 /**
+ * 品牌管理的CRUD操作
+ *
  * @author fy
  * @date 2022/12/3 19:17
  */
@@ -22,12 +24,12 @@ public class BaseTrademarkController {
     @Autowired
     private BaseTrademarkService baseTrademarkService;
 
-    @ApiOperation(value = "分页列表")
+    @ApiOperation(httpMethod = "GET", value = "分页列表")
     @GetMapping("/{current}/{limit}")
     public Result index(@PathVariable Long current,
-                        @PathVariable Long limit){
+                        @PathVariable Long limit) {
 
-        Page<BaseTrademark> page = new Page<>(current,limit);
+        Page<BaseTrademark> page = new Page<>(current, limit);
 
         LambdaQueryWrapper<BaseTrademark> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.orderByAsc(BaseTrademark::getId);
@@ -37,28 +39,28 @@ public class BaseTrademarkController {
         return Result.ok(trademarkPage);
     }
 
-    @ApiOperation(value = "获取BaseTrademark")
+    @ApiOperation(httpMethod = "GET", value = "获取品牌id得到详细数据")
     @GetMapping("get/{id}")
     public Result get(@PathVariable String id) {
         BaseTrademark baseTrademark = baseTrademarkService.getById(id);
         return Result.ok(baseTrademark);
     }
 
-    @ApiOperation(value = "新增BaseTrademark")
+    @ApiOperation(httpMethod = "POST", value = "新增操作")
     @PostMapping("save")
     public Result save(@RequestBody BaseTrademark banner) {
         baseTrademarkService.save(banner);
         return Result.ok();
     }
 
-    @ApiOperation(value = "修改BaseTrademark")
+    @ApiOperation(httpMethod = "PUT", value = "修改操作")
     @PutMapping("update")
     public Result updateById(@RequestBody BaseTrademark banner) {
         baseTrademarkService.updateById(banner);
         return Result.ok();
     }
 
-    @ApiOperation(value = "删除BaseTrademark")
+    @ApiOperation(httpMethod = "DELETE", value = "删除操作")
     @DeleteMapping("remove/{id}")
     public Result remove(@PathVariable Long id) {
         baseTrademarkService.removeById(id);

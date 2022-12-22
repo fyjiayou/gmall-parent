@@ -45,15 +45,15 @@ public class FileUploadController {
         // 使用MinIO服务的URL，端口，Access key和Secret key创建一个MinioClient对象
         // MinioClient minioClient = new MinioClient("https://play.min.io", "Q3AM3UQ867SPQQA43P2F", "zuf+tfteSlswRu7BJ86wekitnifILbZam1KYY3TG");
         MinioClient minioClient = MinioClient.builder()
-                        .endpoint(endpointUrl)
-                        .credentials(accessKey, secreKey)
-                        .build();
+                .endpoint(endpointUrl)
+                .credentials(accessKey, secreKey)
+                .build();
 
         // 检查存储桶是否已经存在
         boolean isExist = minioClient.bucketExists(BucketExistsArgs.builder().bucket(bucketName).build());
 
         if (isExist) {
-            log.info("Bucket {} already exists.",bucketName);
+            log.info("Bucket {} already exists.", bucketName);
         } else {
             // 创建一个名为 bucketName 的存储桶，用于存储照片的zip文件。
             minioClient.makeBucket(MakeBucketArgs.builder()
@@ -75,9 +75,9 @@ public class FileUploadController {
         //  文件上传之后的路径： http://ip:port/gmall/xxxxxx
         url = endpointUrl + "/" + bucketName + "/" + fileName;
 
-        log.info("图片上传url：{}",url);
-        //  将文件上传之后的路径返回给页面！
+        log.info("图片上传url：{}", url);
 
+        //  将文件上传之后的路径返回给页面！
         return Result.ok(url);
     }
 

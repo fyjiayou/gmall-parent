@@ -13,5 +13,4 @@ import org.springframework.stereotype.Service;
 @Service
 public class BaseTrademarkServiceImpl extends ServiceImpl<BaseTrademarkMapper, BaseTrademark> implements BaseTrademarkService {
 
-
 }

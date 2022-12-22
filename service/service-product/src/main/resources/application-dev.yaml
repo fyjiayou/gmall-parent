@@ -1,0 +1,41 @@
+# 服务端口号
+server:
+  port: 8206
+
+# MyBatisPlus相关配置
+mybatis-plus:
+  mapper-locations: classpath:mapper/*Mapper.xml
+
+spring:
+  # MySQL数据源
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    username: root
+    password: 123456
+    url: jdbc:mysql://192.168.123.132:3306/gmall_product?useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
+    hikari:
+      connection-test-query: SELECT 1 # 自动检测连接
+      connection-timeout: 60000 #数据库连接超时时间,默认30秒
+      idle-timeout: 500000 #空闲连接存活最大时间，默认600000（10分钟）
+      max-lifetime: 540000 #此属性控制池中连接的最长生命周期，值0表示无限生命周期，默认1800000即30分钟
+      maximum-pool-size: 12 #连接池最大连接数，默认是10
+      minimum-idle: 10 #最小空闲连接数量
+      pool-name: SPHHikariPool # 连接池名称
+
+  # redis相关配置
+  redis:
+    host: 192.168.123.132
+    password:
+    database: 0
+    port: 6379
+
+minio:
+  endpointUrl: http://192.168.123.132:9000
+  accessKey: admin
+  secreKey: admin123456
+  bucketName: gmall
+
+logging:
+  level:
+      com.fystart.gmall: debug
+

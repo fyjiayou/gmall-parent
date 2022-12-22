@@ -15,6 +15,13 @@
 
 
     <!--    List<SpuSaleAttr> spuSaleAttrList(@Param("spuId") Long spuId);-->
+    <!--
+        根据spuId获取销售属性和销售属性值
+        数据来源：spu_sale_attr  spu_sale_attr_value
+        关联关系：一对多
+        关系维护：spu_id  base_sale_attr_id
+        查询条件：spuId
+    -->
     <select id="spuSaleAttrList" resultMap="spuSaleAttrMap">
         SELECT sa.id ,sa.spu_id, sa.sale_attr_name,sa.base_sale_attr_id,
                sv.id sale_attr_value_id,sv.sale_attr_value_name

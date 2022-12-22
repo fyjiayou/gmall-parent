@@ -19,6 +19,7 @@ public class CorsConfig {
 
         //创建对象
         CorsConfiguration corsConfiguration = new CorsConfiguration();
+
         //允许跨域的网络地址
         corsConfiguration.addAllowedOrigin("*");
         //允许cookie携带

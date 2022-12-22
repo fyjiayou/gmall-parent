@@ -12,6 +12,12 @@ import java.util.List;
  * @date 2022/12/3 19:40
  */
 public interface BaseCategoryTrademarkService extends IService<BaseCategoryTrademark> {
+    /**
+     * 根据三级分类id查询品牌列表
+     *
+     * @param category3Id
+     * @return
+     */
     List<BaseTrademark> findTrademarkList(Long category3Id);
 
     void remove(Long category3Id, Long trademarkId);
